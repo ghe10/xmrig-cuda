@@ -1,0 +1,96 @@
+cuda install
+
+https://docs.nvidia.com/cuda/archive/9.2/cuda-installation-guide-mac-os-x/index.html
+
+
+installed xcode
+https://developer.apple.com/download/more/
+
+Mac-B85M-D3H:/ gche1993$ /usr/bin/cc --version
+Apple LLVM version 9.0.0 (clang-900.0.39.2)
+Target: x86_64-apple-darwin17.7.0
+Thread model: posix
+InstalledDir: /Library/Developer/CommandLineTools/usr/bin
+
+-----------------
+
+clang is Installed
+
+Mac-B85M-D3H:/ gche1993$  clang --version
+Apple LLVM version 9.0.0 (clang-900.0.39.2)
+Target: x86_64-apple-darwin17.7.0
+Thread model: posix
+InstalledDir: /Library/Developer/CommandLineTools/usr/bin
+
+------------------
+
+install cuda
+https://docs.nvidia.com/cuda/archive/9.2/cuda-installation-guide-mac-os-x/index.html
+https://developer.nvidia.com/cuda-10.2-download-archive?target_os=MacOSX&target_arch=x86_64&target_version=1013&target_type=dmglocal
+
+export PATH=/Developer/NVIDIA/CUDA-10.2/bin${PATH:+:${PATH}}
+export DYLD_LIBRARY_PATH=/Developer/NVIDIA/CUDA-10.2/lib${DYLD_LIBRARY_PATH:+:${DYLD_LIBRARY_PATH}}
+https://medium.com/@himanshuagarwal1395/setting-up-environment-variables-in-macos-sierra-f5978369b255
+
+kextstat | grep -i cuda
+nvcc -V
+
+Mac-B85M-D3H:samples gche1993$ ./bin/x86_64/darwin/release/deviceQuery
+./bin/x86_64/darwin/release/deviceQuery Starting...
+
+ CUDA Device Query (Runtime API) version (CUDART static linking)
+
+Detected 1 CUDA Capable device(s)
+
+Device 0: "GeForce GTX 1050"
+  CUDA Driver Version / Runtime Version          10.2 / 10.2
+  CUDA Capability Major/Minor version number:    6.1
+  Total amount of global memory:                 2048 MBytes (2147155968 bytes)
+  ( 5) Multiprocessors, (128) CUDA Cores/MP:     640 CUDA Cores
+  GPU Max Clock rate:                            1531 MHz (1.53 GHz)
+  Memory Clock rate:                             3504 Mhz
+  Memory Bus Width:                              128-bit
+  L2 Cache Size:                                 1048576 bytes
+  Maximum Texture Dimension Size (x,y,z)         1D=(131072), 2D=(131072, 65536), 3D=(16384, 16384, 16384)
+  Maximum Layered 1D Texture Size, (num) layers  1D=(32768), 2048 layers
+  Maximum Layered 2D Texture Size, (num) layers  2D=(32768, 32768), 2048 layers
+  Total amount of constant memory:               65536 bytes
+  Total amount of shared memory per block:       49152 bytes
+  Total number of registers available per block: 65536
+  Warp size:                                     32
+  Maximum number of threads per multiprocessor:  2048
+  Maximum number of threads per block:           1024
+  Max dimension size of a thread block (x,y,z): (1024, 1024, 64)
+  Max dimension size of a grid size    (x,y,z): (2147483647, 65535, 65535)
+  Maximum memory pitch:                          2147483647 bytes
+  Texture alignment:                             512 bytes
+  Concurrent copy and kernel execution:          Yes with 2 copy engine(s)
+  Run time limit on kernels:                     Yes
+  Integrated GPU sharing Host Memory:            No
+  Support host page-locked memory mapping:       Yes
+  Alignment requirement for Surfaces:            Yes
+  Device has ECC support:                        Disabled
+  Device supports Unified Addressing (UVA):      Yes
+  Device supports Compute Preemption:            Yes
+  Supports Cooperative Kernel Launch:            Yes
+  Supports MultiDevice Co-op Kernel Launch:      Yes
+  Device PCI Domain ID / Bus ID / location ID:   0 / 1 / 0
+  Compute Mode:
+     < Default (multiple host threads can use ::cudaSetDevice() with device simultaneously) >
+
+deviceQuery, CUDA Driver = CUDART, CUDA Driver Version = 10.2, CUDA Runtime Version = 10.2, NumDevs = 1
+Result = PASS
+
+------------------------------------------
+Setup xmrig-cuda
+
+
+1. git clone https://github.com/xmrig/xmrig-cuda.git
+2. mkdir xmrig-cuda/build && cd xmrig-cuda/build
+3. cmake .. -DCUDA_LIB=/usr/local/cuda/lib64/stubs/libcuda.so -DCUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda
+4. make -j$(nproc)
+
+
+cmake .. -DCUDA_TOOLKIT_ROOT_DIR=/Developer/NVIDIA/CUDA-12.0/ -DCUDA_ARCH="30;50;60"
+
+cmake .. -DCUDA_LIB=/usr/local/cuda/lib/libcuda.dylib -DCUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda
